@@ -1,3 +1,4 @@
+// declaration object array
 const images = [
   {
     image: "img/01.webp",
@@ -28,12 +29,13 @@ const images = [
 
 const contImage = document.querySelector(".my-carousel-images");
 const contSubImage = document.querySelector(".my-thumbnails");
-let index = 0;
+let index = 0; //index array
 
-images.forEach((element,index) => {
-  contImage.innerHTML+= `
-  <!-- immagine ${index+1} -->
-  <div class="my-carousel-item" carousel-item="${index+1}">
+images.forEach((element, index) => {
+  // cicle forEach  for image e subImage
+  contImage.innerHTML += `
+  <!-- immagine ${index + 1} -->
+  <div class="my-carousel-item" carousel-item="${index + 1}">
     <img
       class="img-fluid"
       src="${element.image}"
@@ -45,17 +47,17 @@ images.forEach((element,index) => {
       </p>
     </div>
   </div>
-  <!-- /immagine ${index+1} -->
+  <!-- /immagine ${index + 1} -->
   `;
-  contSubImage.innerHTML +=`
-  <!-- immagini interne ${index+1} -->
+  contSubImage.innerHTML += `
+  <!-- immagini interne ${index + 1} -->
 
   <img
   class="img-fluid my-thumbnail"
   src="${element.image}"
   alt="Thumbnail of Marvel's Spiderman Miles Morale picture"
 />
-<!-- /immagini interne ${index+1} -->
+<!-- /immagini interne ${index + 1} -->
 
   `;
 });
@@ -71,52 +73,54 @@ thumbs[index].classList.add("active");
 // add event listner btn next
 const btnNext = document.querySelector(".my-next");
 console.log(btnNext);
-btnNext.addEventListener("click", function(){
+btnNext.addEventListener("click", function () {
   index = next();
-
 });
 
 // add event listner btn previous
 const btnPrev = document.querySelector(".my-previous");
 console.log(btnPrev);
-btnPrev.addEventListener("click", function(){
+btnPrev.addEventListener("click", function () {
   index = previous();
 });
-let stop="";
-let stopInvert="";
-let startStopCount = 0;
-let invertCount = 0;
-const startStopBtn = document.getElementById("my-stop-button")
-startStopBtn.addEventListener("click",function(){
-  clearInterval(stopInvert);
-  if(startStopCount % 2 === 0){
-    stop = setInterval(next,2000);
-  } else{
-    clearInterval(stop);
+
+let startStopInterval = ""; // variable to stop setInterval StartBtn
+let invertInterval = ""; // variable to stop setInterval invertBtn
+let startCount = 0; // count to controll start btn
+let invertCount = 0; // count to controll invert bnt
+const startBtn = document.getElementById("my-stop-button");
+//add event listner start button
+startBtn.addEventListener("click", function () {
+  clearInterval(invertInterval);
+  if (startStopCount % 2 === 0) {
+    startStopInterval = setInterval(next, 2000);
+  } else {
+    clearInterval(startStopInterval);
   }
   startStopCount++;
 });
 
-const inverterBtn = document.getElementById("my-order-button");
-inverterBtn.addEventListener("click",function(){
-  clearInterval(stop);
+const invertBtn = document.getElementById("my-order-button");
+// add event listner invert button
+invertBtn.addEventListener("click", function () {
+  clearInterval(startStopInterval);
   startStopCount = 0;
-  if(invertCount % 2 === 0){
-    stopInvert = setInterval(previous,2000);
-  } else{
-    clearInterval(stopInvert);
+  if (invertCount % 2 === 0) {
+    invertInterval = setInterval(previous, 2000);
+  } else {
+    clearInterval(invertInterval);
   }
   invertCount++;
 });
 
-
-
-
-
-function next(){
+/**
+ * Description: bring the photos forward
+ * @returns {number}  // index of array
+ */
+function next() {
   slides[index].classList.remove("active");
   thumbs[index].classList.remove("active");
-  if(index < slides.length-1){
+  if (index < slides.length - 1) {
     index++;
   } else {
     index = 0;
@@ -126,15 +130,19 @@ function next(){
   return index;
 }
 
-function previous(){
-slides[index].classList.remove("active");
-thumbs[index].classList.remove("active");
-if(index > 0){
-index--;
-} else {
-index = 4;
-}
-slides[index].classList.add("active");
-thumbs[index].classList.add("active");
-return index;
+/**
+ * Description bring the photos back
+ * @returns {number}  // index of array
+ */
+function previous() {
+  slides[index].classList.remove("active");
+  thumbs[index].classList.remove("active");
+  if (index > 0) {
+    index--;
+  } else {
+    index = 4;
+  }
+  slides[index].classList.add("active");
+  thumbs[index].classList.add("active");
+  return index;
 }
