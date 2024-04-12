@@ -72,15 +72,7 @@ thumbs[index].classList.add("active");
 const btnNext = document.querySelector(".my-next");
 console.log(btnNext);
 btnNext.addEventListener("click", function(){
-      slides[index].classList.remove("active");
-      thumbs[index].classList.remove("active");
-      if(index < slides.length-1){
-        index++;
-      } else {
-        index = 0;
-      }
-      slides[index].classList.add("active");
-      thumbs[index].classList.add("active");
+  index = next();
 
 });
 
@@ -88,14 +80,61 @@ btnNext.addEventListener("click", function(){
 const btnPrev = document.querySelector(".my-previous");
 console.log(btnPrev);
 btnPrev.addEventListener("click", function(){
-      slides[index].classList.remove("active");
-      thumbs[index].classList.remove("active");
-      if(index > 0){
-        index--;
-      } else {
-        index = 4;
-      }
-      slides[index].classList.add("active");
-      thumbs[index].classList.add("active");
-
+  index = previous();
 });
+let stop="";
+let stopInvert="";
+let startStopCount = 0;
+let invertCount = 0;
+const startStopBtn = document.getElementById("my-stop-button")
+startStopBtn.addEventListener("click",function(){
+  clearInterval(stopInvert);
+  if(startStopCount % 2 === 0){
+    stop = setInterval(next,2000);
+  } else{
+    clearInterval(stop);
+  }
+  startStopCount++;
+});
+
+const inverterBtn = document.getElementById("my-order-button");
+inverterBtn.addEventListener("click",function(){
+  clearInterval(stop);
+  startStopCount = 0;
+  if(invertCount % 2 === 0){
+    stopInvert = setInterval(previous,2000);
+  } else{
+    clearInterval(stopInvert);
+  }
+  invertCount++;
+});
+
+
+
+
+
+function next(){
+  slides[index].classList.remove("active");
+  thumbs[index].classList.remove("active");
+  if(index < slides.length-1){
+    index++;
+  } else {
+    index = 0;
+  }
+  slides[index].classList.add("active");
+  thumbs[index].classList.add("active");
+  return index;
+}
+
+function previous(){
+slides[index].classList.remove("active");
+thumbs[index].classList.remove("active");
+if(index > 0){
+index--;
+} else {
+index = 4;
+}
+slides[index].classList.add("active");
+thumbs[index].classList.add("active");
+return index;
+}
