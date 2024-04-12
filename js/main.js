@@ -84,7 +84,7 @@ btnPrev.addEventListener("click", function () {
   index = previous();
 });
 
-let startStopInterval = ""; // variable to stop setInterval StartBtn
+let startInterval = ""; // variable to stop setInterval StartBtn
 let invertInterval = ""; // variable to stop setInterval invertBtn
 let startCount = 0; // count to controll start btn
 let invertCount = 0; // count to controll invert bnt
@@ -92,19 +92,20 @@ const startBtn = document.getElementById("my-stop-button");
 //add event listner start button
 startBtn.addEventListener("click", function () {
   clearInterval(invertInterval);
-  if (startStopCount % 2 === 0) {
-    startStopInterval = setInterval(next, 2000);
+  invertCount = 0;
+  if (startCount % 2 === 0) {
+    startInterval = setInterval(next, 2000);
   } else {
-    clearInterval(startStopInterval);
+    clearInterval(startInterval);
   }
-  startStopCount++;
+  startCount++;
 });
 
 const invertBtn = document.getElementById("my-order-button");
 // add event listner invert button
 invertBtn.addEventListener("click", function () {
-  clearInterval(startStopInterval);
-  startStopCount = 0;
+  clearInterval(startInterval);
+  startCount = 0;
   if (invertCount % 2 === 0) {
     invertInterval = setInterval(previous, 2000);
   } else {
@@ -140,7 +141,7 @@ function previous() {
   if (index > 0) {
     index--;
   } else {
-    index = 4;
+    index = slides.length-1;
   }
   slides[index].classList.add("active");
   thumbs[index].classList.add("active");
