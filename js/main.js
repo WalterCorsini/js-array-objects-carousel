@@ -120,11 +120,7 @@ const thumbsClick = document.querySelectorAll(".my-thumbnail");
 
 thumbsClick.forEach((element) =>{
   element.addEventListener("click",function(){
-    slides[index].classList.remove("active");
-    thumbs[index].classList.remove("active");
-    thumbs[this.dataset.value].classList.add("active");
-    slides[this.dataset.value].classList.add("active");
-    index = this.dataset.value;
+    index = moveOnClick(this.dataset.value, index);
   });
 });
 
@@ -160,4 +156,14 @@ function previous() {
   slides[index].classList.add("active");
   thumbs[index].classList.add("active");
   return index;
+}
+
+
+function moveOnClick(newNumber, number){
+  slides[number].classList.remove("active");
+  thumbs[number].classList.remove("active");
+  thumbs[newNumber].classList.add("active");
+  slides[newNumber].classList.add("active");
+  number = newNumber;
+  return number;
 }
