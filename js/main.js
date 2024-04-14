@@ -53,7 +53,7 @@ images.forEach((element, index) => {
   <!-- immagini interne ${index + 1} -->
 
   <img
-  class="img-fluid my-thumbnail"
+  class="img-fluid my-thumbnail" data-value="${index}"
   src="${element.image}"
   alt="Thumbnail of Marvel's Spiderman Miles Morale picture"
 />
@@ -112,6 +112,20 @@ invertBtn.addEventListener("click", function () {
     clearInterval(invertInterval);
   }
   invertCount++;
+});
+
+
+// click on thumbnails and move class active
+const thumbsClick = document.querySelectorAll(".my-thumbnail");
+
+thumbsClick.forEach((element) =>{
+  element.addEventListener("click",function(){
+    slides[index].classList.remove("active");
+    thumbs[index].classList.remove("active");
+    thumbs[this.dataset.value].classList.add("active");
+    slides[this.dataset.value].classList.add("active");
+    index = this.dataset.value;
+  });
 });
 
 /**
