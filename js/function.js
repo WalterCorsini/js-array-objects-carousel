@@ -6,9 +6,11 @@
  * @returns {number}
  */
 function createElement(stringImages, stringThumbs, arrayImg, count) {
+    let elemImg = "";
+    let elemThu = "";
     arrayImg.forEach((element, count) => {
         // cicle forEach  for image e subImage
-        stringImages.innerHTML += `
+        elemImg += `
         <!-- immagine ${count + 1} -->
         <div class="my-carousel-item" carousel-item="${count + 1}">
           <img
@@ -24,7 +26,7 @@ function createElement(stringImages, stringThumbs, arrayImg, count) {
         </div>
         <!-- /immagine ${count + 1} -->
         `;
-        stringThumbs.innerHTML += `
+        elemThu += `
         <!-- immagini interne ${count + 1} -->
       
         <img
@@ -33,9 +35,10 @@ function createElement(stringImages, stringThumbs, arrayImg, count) {
         alt="Thumbnail of Marvel's Spiderman Miles Morale picture"
       />
       <!-- /immagini interne ${count + 1} -->
-      
         `;
     });
+    stringImages.innerHTML += elemImg;
+    stringThumbs.innerHTML += elemThu;
 }
 
 /**
