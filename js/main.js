@@ -40,19 +40,14 @@ const thumbs = document.querySelectorAll(".my-thumbnail");
 // add class active at firse image and first subImage
 slides[index].classList.add("active");
 thumbs[index].classList.add("active");
-console.log(typeof slides, typeof thumbs);
 
 // add event listner btn next
-const btnNext = document.querySelector(".my-next");
-console.log(btnNext);
-btnNext.addEventListener("click", function () {
+document.querySelector(".my-next").addEventListener("click", function () {
   index = next(slides, thumbs, index);
 });
 
 // add event listner btn previous
-const btnPrev = document.querySelector(".my-previous");
-console.log(btnPrev);
-btnPrev.addEventListener("click", function () {
+document.querySelector(".my-previous").addEventListener("click", function () {
   index = previous(slides, thumbs, index);
 });
 
@@ -60,9 +55,8 @@ let startInterval = ""; // variable to stop setInterval StartBtn
 let invertInterval = ""; // variable to stop setInterval invertBtn
 let startCount = 0; // count to controll start btn
 let invertCount = 0; // count to controll invert bnt
-const startBtn = document.getElementById("my-stop-button");
 //add event listner start button
-startBtn.addEventListener("click", function () {
+document.getElementById("my-stop-button").addEventListener("click", function () {
   clearInterval(invertInterval);
   invertCount = 0;
   if (startCount % 2 === 0) {
@@ -75,9 +69,8 @@ startBtn.addEventListener("click", function () {
   startCount++;
 });
 
-const invertBtn = document.getElementById("my-order-button");
 // add event listner invert button
-invertBtn.addEventListener("click", function () {
+document.getElementById("my-order-button").addEventListener("click", function () {
   clearInterval(startInterval);
   startCount = 0;
   if (invertCount % 2 === 0) {
@@ -91,11 +84,10 @@ invertBtn.addEventListener("click", function () {
 });
 
 // click on thumbnails and move class active
-const thumbsClick = document.querySelectorAll(".my-thumbnail");
 
-thumbsClick.forEach((element) => {
+document.querySelectorAll(".my-thumbnail").forEach((element) => {
   element.addEventListener("click", function () {
-    index = moveOnClick(this.dataset.value, index);
+  index = moveOnClick(this.dataset.value, index);
   });
 });
 
