@@ -31,9 +31,7 @@ const contImage = document.querySelector(".my-carousel-images");
 const contSubImage = document.querySelector(".my-thumbnails");
 let index = 0; //index array
 
-
 createElement(contImage, contSubImage, images, index);
-
 
 // create array of image e subImage
 const slides = document.querySelectorAll(".my-carousel-item");
@@ -91,7 +89,6 @@ invertBtn.addEventListener("click", function () {
   }
   invertCount++;
 });
-
 
 // click on thumbnails and move class active
 const thumbsClick = document.querySelectorAll(".my-thumbnail");
