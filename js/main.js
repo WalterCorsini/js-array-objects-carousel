@@ -31,36 +31,9 @@ const contImage = document.querySelector(".my-carousel-images");
 const contSubImage = document.querySelector(".my-thumbnails");
 let index = 0; //index array
 
-images.forEach((element, index) => {
-  // cicle forEach  for image e subImage
-  contImage.innerHTML += `
-  <!-- immagine ${index + 1} -->
-  <div class="my-carousel-item" carousel-item="${index + 1}">
-    <img
-      class="img-fluid"
-      src="${element.image}"
-      alt="${element.title}"
-    />
-    <div class="item-description px-3">
-      <h2>${element.title}</h2>
-      <p>${element.text}</p>
-      </p>
-    </div>
-  </div>
-  <!-- /immagine ${index + 1} -->
-  `;
-  contSubImage.innerHTML += `
-  <!-- immagini interne ${index + 1} -->
 
-  <img
-  class="img-fluid my-thumbnail" data-value="${index}"
-  src="${element.image}"
-  alt="Thumbnail of Marvel's Spiderman Miles Morale picture"
-/>
-<!-- /immagini interne ${index + 1} -->
+createElement(contImage, contSubImage, images, index);
 
-  `;
-});
 
 // create array of image e subImage
 const slides = document.querySelectorAll(".my-carousel-item");
@@ -69,19 +42,20 @@ const thumbs = document.querySelectorAll(".my-thumbnail");
 // add class active at firse image and first subImage
 slides[index].classList.add("active");
 thumbs[index].classList.add("active");
+console.log(typeof slides, typeof thumbs);
 
 // add event listner btn next
 const btnNext = document.querySelector(".my-next");
 console.log(btnNext);
 btnNext.addEventListener("click", function () {
-  index = next();
+  index = next(slides, thumbs, index);
 });
 
 // add event listner btn previous
 const btnPrev = document.querySelector(".my-previous");
 console.log(btnPrev);
 btnPrev.addEventListener("click", function () {
-  index = previous();
+  index = previous(slides, thumbs, index);
 });
 
 let startInterval = ""; // variable to stop setInterval StartBtn
@@ -94,7 +68,9 @@ startBtn.addEventListener("click", function () {
   clearInterval(invertInterval);
   invertCount = 0;
   if (startCount % 2 === 0) {
-    startInterval = setInterval(next, 2000);
+    startInterval = setInterval(function () {
+      index = next(slides, thumbs, index);
+    }, 2000);
   } else {
     clearInterval(startInterval);
   }
@@ -107,7 +83,9 @@ invertBtn.addEventListener("click", function () {
   clearInterval(startInterval);
   startCount = 0;
   if (invertCount % 2 === 0) {
-    invertInterval = setInterval(previous, 2000);
+    invertInterval = setInterval(function () {
+      index = previous(slides, thumbs, index);
+    }, 2000);
   } else {
     clearInterval(invertInterval);
   }
@@ -118,52 +96,10 @@ invertBtn.addEventListener("click", function () {
 // click on thumbnails and move class active
 const thumbsClick = document.querySelectorAll(".my-thumbnail");
 
-thumbsClick.forEach((element) =>{
-  element.addEventListener("click",function(){
+thumbsClick.forEach((element) => {
+  element.addEventListener("click", function () {
     index = moveOnClick(this.dataset.value, index);
   });
 });
 
-/**
- * Description: bring the photos forward
- * @returns {number}  // index of array
- */
-function next() {
-  slides[index].classList.remove("active");
-  thumbs[index].classList.remove("active");
-  if (index < slides.length - 1) {
-    index++;
-  } else {
-    index = 0;
-  }
-  slides[index].classList.add("active");
-  thumbs[index].classList.add("active");
-  return index;
-}
 
-/**
- * Description bring the photos back
- * @returns {number}  // index of array
- */
-function previous() {
-  slides[index].classList.remove("active");
-  thumbs[index].classList.remove("active");
-  if (index > 0) {
-    index--;
-  } else {
-    index = slides.length-1;
-  }
-  slides[index].classList.add("active");
-  thumbs[index].classList.add("active");
-  return index;
-}
-
-
-function moveOnClick(newNumber, number){
-  slides[number].classList.remove("active");
-  thumbs[number].classList.remove("active");
-  thumbs[newNumber].classList.add("active");
-  slides[newNumber].classList.add("active");
-  number = newNumber;
-  return number;
-}
