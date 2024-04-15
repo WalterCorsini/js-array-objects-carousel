@@ -51,36 +51,37 @@ document.querySelector(".my-previous").addEventListener("click", function () {
   index = previous(slides, thumbs, index);
 });
 
-let startInterval = ""; // variable to stop setInterval StartBtn
-let invertInterval = ""; // variable to stop setInterval invertBtn
-let startCount = 0; // count to controll start btn
-let invertCount = 0; // count to controll invert bnt
+// save in to variable setInterval 
+let invertInterval = setInterval(function () {
+  index = previous(slides, thumbs, index);
+}, 2000);
+
+let startInterval = setInterval(function () {
+  index = next(slides, thumbs, index);
+}, 2000);
+
 //add event listner start button
 document.getElementById("my-stop-button").addEventListener("click", function () {
-  clearInterval(invertInterval);
-  invertCount = 0;
-  if (startCount % 2 === 0) {
-    startInterval = setInterval(function () {
+  if (startInterval !== null) {
+    clearInterval(startInterval);
+    startInterval = null;
+  } else {
+    setInterval(function () {
       index = next(slides, thumbs, index);
     }, 2000);
-  } else {
-    clearInterval(startInterval);
   }
-  startCount++;
 });
 
 // add event listner invert button
 document.getElementById("my-order-button").addEventListener("click", function () {
-  clearInterval(startInterval);
-  startCount = 0;
-  if (invertCount % 2 === 0) {
-    invertInterval = setInterval(function () {
-      index = previous(slides, thumbs, index);
-    }, 2000);
-  } else {
+  if (invertInterval !== null) {
     clearInterval(invertInterval);
+    invertInterval = null;
+  } else {
+    setInterval(function () {
+      index = next(slides, thumbs, index);
+    }, 2000);
   }
-  invertCount++;
 });
 
 // click on thumbnails and move class active
