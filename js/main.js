@@ -51,35 +51,33 @@ document.querySelector(".my-previous").addEventListener("click", function () {
   index = previous(slides, thumbs, index);
 });
 
-// save in to variable setInterval 
-let invertInterval = setInterval(function () {
-  index = previous(slides, thumbs, index);
-}, 2000);
-
-let startInterval = setInterval(function () {
-  index = next(slides, thumbs, index);
-}, 2000);
+// declaration variable setInterval 
+let invertInterval = null;
+let startInterval = null;
 
 //add event listner start button
 document.getElementById("my-stop-button").addEventListener("click", function () {
+  clearInterval(invertInterval);
   if (startInterval !== null) {
     clearInterval(startInterval);
     startInterval = null;
   } else {
-    setInterval(function () {
+    startInterval = setInterval(function () {
       index = next(slides, thumbs, index);
     }, 2000);
+    console.log(startInterval);
   }
 });
 
 // add event listner invert button
 document.getElementById("my-order-button").addEventListener("click", function () {
+  clearInterval(startInterval);
   if (invertInterval !== null) {
     clearInterval(invertInterval);
     invertInterval = null;
   } else {
-    setInterval(function () {
-      index = next(slides, thumbs, index);
+    invertInterval = setInterval(function () {
+      index = previous(slides, thumbs, index);
     }, 2000);
   }
 });
